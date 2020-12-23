@@ -1,11 +1,16 @@
 package bt.com.desafioana.modelo
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 data class PullRequest (
-        val icone_usuario: Int,
-        ///val dono: Owner,
         val titulo: String,
+        @SerializedName("user")
+        val dono: Owner,
         val criacao: String,
-        val userName: String,
-        val nomeAutor:String,
-        val body: String)
-        //val html: String
+        val body: String,
+        val html_url: String) : Parcelable
+

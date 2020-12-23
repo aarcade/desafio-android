@@ -22,6 +22,8 @@ class RepositorioAdapter(
         val descricao: TextView = itemView.findViewById(R.id.descricao)
         val start: TextView =itemView.findViewById(R.id.star_qtd)
         val fork: TextView =itemView.findViewById(R.id.fork_qtd)
+
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -53,8 +55,8 @@ class RepositorioAdapter(
             it.descricao.text = currentItem.descricaoRepositorio
             it.start.text = currentItem.stars.toString()
             it.fork.text = currentItem.forks.toString()
-            it.username.text= currentItem.userName
-            it.iconeUsuario.setImageResource(currentItem.iconeUsuario)
+            it.username.text= currentItem.dono.login
+            it.iconeUsuario.setImageResource(currentItem.dono.icone_usuario)
         }
     }
 

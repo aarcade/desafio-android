@@ -1,11 +1,13 @@
 package bt.com.desafioana.modelo
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Repositorio(
-        val iconeUsuario: Int,
-        //val dono: Owner,
-        val userName: String,
         val nomeRepositorio: String,
-        val descricaoRepositorio: String,
         val nomeAutor: String,
+        val descricaoRepositorio: String,
+        val dono: Owner,
         val stars: Int,
-        val forks: Int)
+        val forks: Int) : Parcelable

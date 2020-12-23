@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bt.com.desafioana.R
@@ -11,14 +12,20 @@ import bt.com.desafioana.activity.pull.PullActivity
 import bt.com.desafioana.adapter.RepositorioAdapter
 import bt.com.desafioana.databinding.ActivityRepositorioBinding
 import bt.com.desafioana.modelo.Repositorio
+import bt.com.desafioana.viewmodel.RepositorioViewModel
+import bt.com.desafioana.viewmodel.ViewModelFactory
+import bt.com.desafioana.webservices.InicializadorRetrofit
+import bt.com.desafioana.webservices.RepositorioService
 
 
 class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.OnItemClickListener{
-    private val exampleList = generateDummyList(500)
-    private val adapter = RepositorioAdapter(exampleList, this)
-    val page=1
-    val isLoading = false
-    val limit =10
+    var pagina =1
+    private val repositorioList=ArrayList<Repositorio>()
+    var linearLayoutManager = LinearLayoutManager(this)
+    val adapterRepository = RepositorioAdapter(repositorioList, this)
+    private val repositorioViewModel: RepositorioViewModel by lazy {
+
+    }
 
 
 
@@ -26,11 +33,11 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.OnItemClick
         super.onCreate(savedInstanceState)
         val binding = ActivityRepositorioBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        repositorioViewModel.listaRepositorio(pagina)
 
-        val recycler_view = findViewById<RecyclerView>(R.id.repository_recycler)
-        recycler_view?.adapter = adapter
-        recycler_view?.layoutManager = LinearLayoutManager(this)
-        recycler_view?.setHasFixedSize(true)
+        val repositorioService = InicializadorRetrofit.retrofit.create(RepositorioService::class.java)
+
+
 
 
 
@@ -56,7 +63,10 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.OnItemClick
         }
         return list
 
-
+        val recycler_view = findViewById<RecyclerView>(R.id.repository_recycler)
+        recycler_view?.adapter = adapter
+        recycler_view?.layoutManager = LinearLayoutManager(this)
+        recycler_view?.setHasFixedSize(true)
     }
 
 }
