@@ -11,14 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DesafioAna">
-        <activity android:name=".activity.repositorio.RepositoriosActivity" android:launchMode="singleTop">
+        <activity android:name=".activity.RepositoriosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.pull.PullActivity"/>
+        <activity android:name=".activity.PullActivity"/>
     </application>
 
 </manifest>

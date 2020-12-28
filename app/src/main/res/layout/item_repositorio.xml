@@ -1,126 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     android:id="@+id/card_repositorio"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="24dp"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:clickable="true"
-    >
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:padding="8dp"
-        android:orientation="horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="16dp">
 
-            <TextView
-                android:id="@+id/nome_repositorio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_marginTop="24dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginStart="16dp"
-                android:text="Nome do Repositório" />
+        <TextView
+            android:id="@+id/nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nome do Repositorio"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/descricao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nome_repositorio"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:maxLines="2"
-                android:text="Descrição"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:text="algum texto algum texto algum texto algum texto algum texto algum texto algum texto"
+            app:layout_constraintStart_toStartOf="@+id/nome"
+            app:layout_constraintTop_toBottomOf="@+id/nome" />
 
-            <ImageView
-                android:id="@+id/fork"
-                android:layout_width="36dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/descricao"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_fork"/>
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintStart_toStartOf="@+id/descricao"
+            app:layout_constraintTop_toBottomOf="@id/descricao" />
 
-            <TextView
-                android:id="@+id/fork_qtd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/descricao"
-                android:layout_marginStart="56dp"
-                android:layout_marginTop="16dp"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:text="No"/>
+        <TextView
+            android:id="@+id/starQtd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/star"
+            app:layout_constraintTop_toBottomOf="@+id/descricao"
+            android:text="552"/>
 
-            <ImageView
-                android:id="@+id/star"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/descricao"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_toRightOf="@id/fork_qtd"
-                android:background="@drawable/ic_star" />
+        <ImageView
+            android:id="@+id/fork"
+            android:layout_width="36dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/starQtd"
+            app:layout_constraintTop_toBottomOf="@+id/descricao"
+            app:srcCompat="@drawable/ic_fork" />
 
-            <TextView
-                android:id="@+id/star_qtd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="136dp"
-                android:layout_marginTop="16dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_below="@id/descricao"
-                android:text="No"/>
+        <TextView
+            android:id="@+id/forkQtd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/fork"
+            app:layout_constraintTop_toBottomOf="@+id/descricao"
+            android:text="5552"/>
 
-            <ImageView
-                android:id="@+id/icone_usuario"
-                android:layout_width="81dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="275dp"
-                android:layout_marginTop="16dp"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_usuario" />
+        <ImageView
+            android:id="@+id/icone_usuario"
+            android:layout_width="88dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_usuario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/descricao"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/icone_usuario"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="260dp"
-                android:layout_marginTop="1dp"
-                android:text="username"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/nome_autor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/icone_usuario"
-                android:layout_marginStart="255dp"
-                android:layout_marginTop="24dp"
-                android:text="Nome Completo"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="316dp"
+            tools:layout_editor_absoluteY="108dp"
+            app:layout_constraintStart_toStartOf="@id/icone_usuario"
+            app:layout_constraintEnd_toEndOf="@id/icone_usuario"
+            app:layout_constraintTop_toBottomOf="@id/icone_usuario"
+            android:text="User Name"/>
 
 
-        </RelativeLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </androidx.cardview.widget.CardView>

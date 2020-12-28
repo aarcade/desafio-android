@@ -32,7 +32,7 @@
             android:layout_below="@id/titulo_pull"
             android:text="Descrição Repositório"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icone_usuario_pull"
             android:layout_width="64dp"
             android:layout_height="64dp"

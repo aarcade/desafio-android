@@ -3,46 +3,61 @@ package bt.com.desafioana.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import bt.com.desafioana.R
 import bt.com.desafioana.modelo.PullRequest
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_pull.view.*
 
-class PullAdapter(val pullList: List<PullRequest>): RecyclerView.Adapter<PullAdapter.PullAdapterViewHolder>() {
 
+class PullAdapter(private val listPull: List<PullRequest>) : RecyclerView.Adapter<PullAdapter.ViewHolder>() {
 
-
-    class PullAdapterViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
-        val iconeUsuario: ImageView = itemView.findViewById(R.id.icone_usuario_pull)
-        val username: TextView = itemView.findViewById(R.id.username_pull)
-        val titulo: TextView = itemView.findViewById(R.id.titulo_pull)
-        val body: TextView = itemView.findViewById(R.id.descricao_pull)
-        val criacao:TextView = itemView.findViewById(R.id.data_pull)
-        val nomeAutor: TextView = itemView.findViewById(R.id.nome_autor_pull)
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PullAdapterViewHolder {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_pull, parent, false)
-            return PullAdapterViewHolder(itemView)
-    }
 
     override fun getItemCount(): Int {
-       return pullList.size
+        return listPull.size
     }
 
-    override fun onBindViewHolder(holder: PullAdapterViewHolder, position: Int) {
-        val currentItem = pullList[position]
-        holder.let {
-            it.titulo.text = currentItem.titulo
-            it.body.text = currentItem.body
-            it.username.text= currentItem.userName
-            it.iconeUsuario.setImageResource(currentItem.icone_usuario)
-            it.criacao.text=currentItem.criacao
-            it.nomeAutor.text =currentItem.nomeAutor
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.loadProfileImage(listPull[position].owner.icone_usuario)
+        holder.data.text = listPull[position].created_at
+        holder.descricao_pull.text = listPull[position].body
+        holder.titulo_pull.text = listPull[position].title
+        holder.username.text = listPull[position].owner.login
+
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val titulo_pull = itemView.titulo_pull
+        val descricao_pull = itemView.descricao_pull
+        val username= itemView.username_pull
+        val data = itemView.data_pull
+        val iconeUsuario = itemView.icone_usuario_pull
+
+        fun loadProfileImage(url: String) {
+            if (url.isBlank()) {
+                Picasso.get()
+                    .load(R.drawable.ic_usuario)
+                    .placeholder(R.drawable.ic_usuario)
+                    .error(R.drawable.ic_usuario)
+                    .fit()
+                    .into(iconeUsuario)
+            } else {
+                Picasso.get()
+                    .load(url)
+                    .placeholder(R.drawable.ic_usuario)
+                    .error(R.drawable.ic_usuario)
+                    .fit()
+                    .into(iconeUsuario)
+            }
         }
-
     }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull, parent, false))
+    }
+
+    interface RecyclerViewClickListener{
+        fun onRecyclerViewItemClick(position: Int)
+    }
+
 
 }

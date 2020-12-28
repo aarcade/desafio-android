@@ -1,68 +1,67 @@
 package bt.com.desafioana.adapter
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import bt.com.desafioana.R
+import bt.com.desafioana.databinding.ItemRepositorioBinding
 import bt.com.desafioana.modelo.Repositorio
-
-class RepositorioAdapter(
-    private val repositorioList: List<Repositorio>,
-    private val listener: OnItemClickListener): RecyclerView.Adapter<RepositorioAdapter.RepositorioAdapterViewHolder>(){
-
-   inner class RepositorioAdapterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val iconeUsuario: ImageView = itemView.findViewById(R.id.icone_usuario)
-        val username: TextView = itemView.findViewById(R.id.username)
-        val nomeAutor: TextView = itemView.findViewById(R.id.nome_autor)
-        val nomeRepositorio: TextView = itemView.findViewById(R.id.nome_repositorio)
-        val descricao: TextView = itemView.findViewById(R.id.descricao)
-        val start: TextView =itemView.findViewById(R.id.star_qtd)
-        val fork: TextView =itemView.findViewById(R.id.fork_qtd)
+import com.bumptech.glide.Glide
 
 
-        init {
-            itemView.setOnClickListener(this)
+class RepositorioAdapter(private val repos: List<Repositorio>,
+                         private val listener: RecyclerViewClickListener) : RecyclerView.Adapter<RepositorioAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemRepositorioBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding(repos[position])
+        holder.itemRepositoryBinding.cardRepositorio.setOnClickListener {
+            listener.onRecyclerViewItemClick(holder.itemRepositoryBinding.cardRepositorio, repos[position])
         }
 
-       override fun onClick(v: View?) {
-           val position: Int = adapterPosition
-           if (position!= RecyclerView.NO_POSITION){
-               listener.onItemClick(position)
-           }
-
-       }
-   }
-
-
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RepositorioAdapterViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_repositorio, parent, false)
-        return RepositorioAdapterViewHolder(itemView)
-
     }
-    override fun onBindViewHolder(holder: RepositorioAdapterViewHolder, position: Int) {
-        val currentItem = repositorioList[position]
-        holder.let {
-            it.nomeAutor.text = currentItem.nomeAutor
-            it.nomeRepositorio.text = currentItem.nomeRepositorio
-            it.descricao.text = currentItem.descricaoRepositorio
-            it.start.text = currentItem.stars.toString()
-            it.fork.text = currentItem.forks.toString()
-            it.username.text= currentItem.dono.login
-            it.iconeUsuario.setImageResource(currentItem.dono.icone_usuario)
+
+    override fun getItemCount(): Int {
+        return repos.size
+    }
+
+    inner class ViewHolder(
+        val itemRepositoryBinding: ItemRepositorioBinding
+    ) : RecyclerView.ViewHolder(itemRepositoryBinding.root) {
+        fun binding(repo: Repositorio) {
+            itemRepositoryBinding.nome.text = repo.fullName
+            itemRepositoryBinding.descricao.text = repo.description
+            itemRepositoryBinding.forkQtd.text = repo.forks.toString()
+            itemRepositoryBinding.starQtd.text = repo.stars.toString()
+            itemRepositoryBinding.username.text = repo.owner.login
+
+
+            Glide.with(itemRepositoryBinding.iconeUsuario)
+                .load(repo.owner.icone_usuario)
+                .into(itemRepositoryBinding.iconeUsuario)
+
+
+
+
         }
-    }
 
-    override fun getItemCount()= repositorioList.size
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
 
+    }
+    interface RecyclerViewClickListener{
+        fun onRecyclerViewItemClick(view: View, repo: Repositorio)
+    }
 }
+
+
+
+
