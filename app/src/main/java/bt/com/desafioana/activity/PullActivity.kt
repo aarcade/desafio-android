@@ -57,7 +57,8 @@ class PullActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<PullRequest>>, response: Response<List<PullRequest>>) {
                 if (response.isSuccessful){
                     response.body()?.let {
-                        bindingPull.pullRecycler.adapter = PullAdapter(listPull)
+                        bindingPull.pullRecycler.adapter = PullAdapter(it)
+
                     }
                 }
             }

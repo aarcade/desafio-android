@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface RepositorioService {
-    @GET("search/repositories?q=language:Java&sort=stars&")
+    @GET("search/repositories?q=language:Java&sort=stars")
     fun reposList(): Call<Repos>
 }

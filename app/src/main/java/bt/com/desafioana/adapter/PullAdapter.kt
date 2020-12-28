@@ -55,9 +55,6 @@ class PullAdapter(private val listPull: List<PullRequest>) : RecyclerView.Adapte
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull, parent, false))
     }
 
-    interface RecyclerViewClickListener{
-        fun onRecyclerViewItemClick(position: Int)
-    }
 
 
 }

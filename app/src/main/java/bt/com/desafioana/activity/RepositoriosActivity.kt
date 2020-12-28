@@ -3,7 +3,6 @@ package bt.com.desafioana.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +40,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                 if (response.isSuccessful){
                     response.body()?.let {
                         binding.repositoryRecycler.adapter = RepositorioAdapter(it.items, this@RepositoriosActivity)
+                        list.addAll(it.items)
                     }
                 }
             }
@@ -62,8 +62,10 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     }
 
 
-    override fun onRecyclerViewItemClick(view: View, repo: Repositorio) {
+    override fun onRecyclerViewItemClick(position: Int) {
         val intencao = Intent(this@RepositoriosActivity, PullActivity::class.java)
+        intencao.putExtra(Constants.owner, list[position].owner.login)
+        intencao.putExtra(Constants.repositorio, list[position].name)
         startActivity(intencao)
     }
 

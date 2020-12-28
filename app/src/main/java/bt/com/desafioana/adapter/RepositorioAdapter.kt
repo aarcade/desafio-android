@@ -2,7 +2,6 @@ package bt.com.desafioana.adapter
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import bt.com.desafioana.databinding.ItemRepositorioBinding
@@ -26,10 +25,11 @@ class RepositorioAdapter(private val repos: List<Repositorio>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding(repos[position])
         holder.itemRepositoryBinding.cardRepositorio.setOnClickListener {
-            listener.onRecyclerViewItemClick(holder.itemRepositoryBinding.cardRepositorio, repos[position])
+            listener.onRecyclerViewItemClick(position)
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return repos.size
@@ -58,7 +58,7 @@ class RepositorioAdapter(private val repos: List<Repositorio>,
 
     }
     interface RecyclerViewClickListener{
-        fun onRecyclerViewItemClick(view: View, repo: Repositorio)
+        fun onRecyclerViewItemClick(position: Int)
     }
 }
 
