@@ -1,5 +1,7 @@
 package bt.com.desafioana.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -15,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PullActivity : AppCompatActivity() {
+class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
 
     private var owner = ""
     private var repositorio = ""
@@ -24,7 +26,7 @@ class PullActivity : AppCompatActivity() {
 
     val pull by lazy { initPull() }
 
-    private val adapter = PullAdapter(listPull)
+    private val adapter = PullAdapter(listPull, this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingPull = ActivityPullBinding.inflate(layoutInflater)
@@ -57,7 +59,8 @@ class PullActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<PullRequest>>, response: Response<List<PullRequest>>) {
                 if (response.isSuccessful){
                     response.body()?.let {
-                        bindingPull.pullRecycler.adapter = PullAdapter(it)
+                        bindingPull.pullRecycler.adapter = PullAdapter(it,this@PullActivity)
+                        listPull.addAll(it)
 
                     }
                 }
@@ -70,5 +73,12 @@ class PullActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return false
+    }
+
+    override fun onRecyclerClickListener(position: Int) {
+        val url = listPull[position].html_url
+        val intencaoPull= Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intencaoPull)
+
     }
 }

@@ -10,7 +10,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_pull.view.*
 
 
-class PullAdapter(private val listPull: List<PullRequest>) : RecyclerView.Adapter<PullAdapter.ViewHolder>() {
+class PullAdapter(private val listPull: List<PullRequest>,
+                  private val recyclerRepositoryClickListener: RecyclerClickListener
+) : RecyclerView.Adapter<PullAdapter.ViewHolder>() {
 
 
     override fun getItemCount(): Int {
@@ -23,6 +25,10 @@ class PullAdapter(private val listPull: List<PullRequest>) : RecyclerView.Adapte
         holder.descricao_pull.text = listPull[position].body
         holder.titulo_pull.text = listPull[position].title
         holder.username.text = listPull[position].owner.login
+        holder.itemView.setOnClickListener{
+            recyclerRepositoryClickListener.onRecyclerClickListener(position)
+        }
+
 
     }
 
@@ -55,6 +61,10 @@ class PullAdapter(private val listPull: List<PullRequest>) : RecyclerView.Adapte
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pull, parent, false))
     }
 
+
+    interface RecyclerClickListener{
+        fun onRecyclerClickListener(position: Int)
+    }
 
 
 }
