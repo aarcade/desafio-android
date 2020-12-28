@@ -24,7 +24,7 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
     private val listPull = ArrayList<PullRequest>()
     private lateinit var bindingPull: ActivityPullBinding
 
-    val pull by lazy { initPull() }
+    /////////val pull by lazy { initPull() }
 
     private val adapter = PullAdapter(listPull, this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +34,7 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
         setContentView(bindingPull.root)
         owner= intent.getStringExtra(RepositoriosActivity.Constants.owner).toString()
         repositorio = intent.getStringExtra(RepositoriosActivity.Constants.repositorio).toString()
+
         bindingPull.pullRecycler.adapter = adapter
         bindingPull.pullRecycler.layoutManager = LinearLayoutManager(this)
         bindingPull.pullRecycler.setHasFixedSize(true)
@@ -46,7 +47,7 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
 
 
     }
-    fun getPullRequests(owner: String, repositorio: String) {
+    private fun getPullRequests(owner: String, repositorio: String) {
         val apiService = initPull()
 
         val call = apiService.getPullRequests(owner, repositorio)

@@ -2,59 +2,54 @@ package bt.com.desafioana.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import bt.com.desafioana.adapter.RepositorioAdapter
 import bt.com.desafioana.databinding.ActivityRepositorioBinding
-import bt.com.desafioana.modelo.Repos
-import bt.com.desafioana.modelo.Repositorio
+import bt.com.desafioana.viewmodel.RepositorioViewModel
 import bt.com.desafioana.webservices.InicializadorRetrofit.initRepositorio
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerViewClickListener {
-    private val list = ArrayList<Repositorio>()
-    private val adapter = RepositorioAdapter(list, this)
-
+    private val adapterRepositorio = RepositorioAdapter(ArrayList(), this)
 
     private lateinit var binding: ActivityRepositorioBinding
+    private lateinit var viewModel: RepositorioViewModel
+    private var pagina = 1
+
 
     private val client by lazy { initRepositorio() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inicializador()
+
+    }
+
+
+    private fun inicializador() {
         binding = ActivityRepositorioBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.repositoryRecycler.adapter = adapter
+        binding.repositoryRecycler.adapter = adapterRepositorio
         binding.repositoryRecycler.layoutManager = LinearLayoutManager(this)
         binding.repositoryRecycler.setHasFixedSize(true)
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
-
-        client.reposList().enqueue(object : Callback<Repos>{
-            override fun onResponse(call: Call<Repos>, response: Response<Repos>) {
-                if (response.isSuccessful){
-                    response.body()?.let {
-                        binding.repositoryRecycler.adapter = RepositorioAdapter(it.items, this@RepositoriosActivity)
-                        list.addAll(it.items)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<Repos>, t: Throwable) {
-                Log.d("Erro de chamada", t.message.toString())
-                Toast.makeText(this@RepositoriosActivity, t.message, Toast.LENGTH_LONG).show()
-            }
-
-        })
-
+        getRepositorio(pagina)
 
     }
 
+    private fun getRepositorio(pagina: Int) {
+
+          viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
+          viewModel.liveData.observe(this, Observer {
+              adapterRepositorio.repos.addAll(it)
+              adapterRepositorio.notifyDataSetChanged()
+          })
+
+        viewModel.getRepositorio(pagina)
+    }
 
     object Constants {
         const val owner = "OWNER"
@@ -64,8 +59,8 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
 
     override fun onRecyclerViewItemClick(position: Int) {
         val intencao = Intent(this@RepositoriosActivity, PullActivity::class.java)
-        intencao.putExtra(Constants.owner, list[position].owner.login)
-        intencao.putExtra(Constants.repositorio, list[position].name)
+        intencao.putExtra(Constants.owner, adapterRepositorio.repos[position].owner.login)
+        intencao.putExtra(Constants.repositorio, adapterRepositorio.repos[position].name)
         startActivity(intencao)
     }
 

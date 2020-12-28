@@ -9,10 +9,11 @@ import bt.com.desafioana.modelo.Repositorio
 import com.bumptech.glide.Glide
 
 
-class RepositorioAdapter(private val repos: List<Repositorio>,
+class RepositorioAdapter(val repos: MutableList<Repositorio>,
                          private val listener: RecyclerViewClickListener) : RecyclerView.Adapter<RepositorioAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
+            ViewHolder {
         return ViewHolder(
             ItemRepositorioBinding.inflate(
                 LayoutInflater.from(parent.context),
