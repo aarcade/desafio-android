@@ -11,32 +11,22 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RepositorioViewModel: ViewModel() {
-
-
-    private val list : MutableList<Repositorio> = arrayListOf<Repositorio>()
-    private val client by lazy { InicializadorRetrofit.initRepositorio() }
-    val liveData: MutableLiveData<List<Repositorio>> = MutableLiveData()
-
+    private val clientRepositorio by lazy { InicializadorRetrofit.initRepositorio() }
+    val liveDataRepositorioSucesso: MutableLiveData<List<Repositorio>> = MutableLiveData()
     fun getRepositorio(pagina: Int){
-
-
-        client.reposList(pagina).enqueue(object : Callback<Repos> {
+        clientRepositorio.reposList(pagina).enqueue(object : Callback<Repos> {
             override fun onResponse(call: Call<Repos>, response: Response<Repos>) {
                 if (response.isSuccessful){
                     response.body()?.let {
 
-                        liveData.postValue(it.items)
+                        liveDataRepositorioSucesso.postValue(it.items)
                     }
                 }
             }
-
             override fun onFailure(call: Call<Repos>, t: Throwable) {
                 Log.d("Erro de chamada", t.message.toString())
                 ////Toast.makeText(this@RepositoriosActivity, t.message, Toast.LENGTH_LONG).show()
             }
-
         })
-
     }
-
 }

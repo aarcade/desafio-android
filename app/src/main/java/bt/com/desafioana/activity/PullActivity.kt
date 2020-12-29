@@ -3,30 +3,25 @@ package bt.com.desafioana.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import bt.com.desafioana.adapter.PullAdapter
 import bt.com.desafioana.databinding.ActivityPullBinding
-import bt.com.desafioana.modelo.PullRequest
-import bt.com.desafioana.webservices.InicializadorRetrofit.initPull
 import kotlinx.android.synthetic.main.activity_pull.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import bt.com.desafioana.viewmodel.PullViewModel as PullViewModel1
 
 class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
 
     private var owner = ""
     private var repositorio = ""
-    private val listPull = ArrayList<PullRequest>()
     private lateinit var bindingPull: ActivityPullBinding
+    private lateinit var viewModelPull: PullViewModel1
 
-    /////////val pull by lazy { initPull() }
 
-    private val adapter = PullAdapter(listPull, this)
+    private val adapterPull = PullAdapter(ArrayList(), this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingPull = ActivityPullBinding.inflate(layoutInflater)
@@ -35,40 +30,26 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
         owner= intent.getStringExtra(RepositoriosActivity.Constants.owner).toString()
         repositorio = intent.getStringExtra(RepositoriosActivity.Constants.repositorio).toString()
 
-        bindingPull.pullRecycler.adapter = adapter
+        bindingPull.pullRecycler.adapter = adapterPull
         bindingPull.pullRecycler.layoutManager = LinearLayoutManager(this)
         bindingPull.pullRecycler.setHasFixedSize(true)
         setSupportActionBar(toolBarPull)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         bindingPull.toolBarPull.title = repositorio
-        getPullRequests(owner,repositorio)
-
-
-
-    }
-    private fun getPullRequests(owner: String, repositorio: String) {
-        val apiService = initPull()
-
-        val call = apiService.getPullRequests(owner, repositorio)
-        call.enqueue(object : Callback<List<PullRequest>> {
-            override fun onFailure(call: Call<List<PullRequest>>, t: Throwable) {
-                Log.d("Erro de chamada", t.message.toString())
-                Toast.makeText(this@PullActivity, t.message, Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<List<PullRequest>>, response: Response<List<PullRequest>>) {
-                if (response.isSuccessful){
-                    response.body()?.let {
-                        bindingPull.pullRecycler.adapter = PullAdapter(it,this@PullActivity)
-                        listPull.addAll(it)
-
-                    }
-                }
-            }
+        viewModelPull = ViewModelProvider(this).get(PullViewModel1::class.java)
+        viewModelPull.liveDataPullSucesso.observe(this, Observer {
+            adapterPull.listPull.addAll(it)
+            adapterPull.notifyDataSetChanged()
 
         })
+        viewModelPull.getPullRequests(owner, repositorio)
+
+
+
+
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             android.R.id.home -> finish()
@@ -77,7 +58,7 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
     }
 
     override fun onRecyclerClickListener(position: Int) {
-        val url = listPull[position].html_url
+        val url = adapterPull.listPull[position].html_url
         val intencaoPull= Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intencaoPull)
 

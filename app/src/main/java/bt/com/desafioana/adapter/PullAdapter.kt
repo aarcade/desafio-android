@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_pull.view.*
 
 
-class PullAdapter(private val listPull: List<PullRequest>,
+class PullAdapter(val listPull: MutableList<PullRequest>,
                   private val recyclerRepositoryClickListener: RecyclerClickListener
 ) : RecyclerView.Adapter<PullAdapter.ViewHolder>() {
 

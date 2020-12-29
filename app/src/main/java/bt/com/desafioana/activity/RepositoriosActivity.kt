@@ -17,7 +17,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     private lateinit var binding: ActivityRepositorioBinding
     private lateinit var viewModel: RepositorioViewModel
     private var pagina = 1
-
+    private var isLoading = false
 
     private val client by lazy { initRepositorio() }
 
@@ -36,6 +36,8 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
         binding.repositoryRecycler.setHasFixedSize(true)
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
         getRepositorio(pagina)
 
     }
@@ -43,9 +45,10 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     private fun getRepositorio(pagina: Int) {
 
           viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
-          viewModel.liveData.observe(this, Observer {
+          viewModel.liveDataRepositorioSucesso.observe(this, Observer {
               adapterRepositorio.repos.addAll(it)
               adapterRepositorio.notifyDataSetChanged()
+
           })
 
         viewModel.getRepositorio(pagina)
