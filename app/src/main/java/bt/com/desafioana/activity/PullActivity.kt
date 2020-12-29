@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import bt.com.desafioana.adapter.PullAdapter
 import bt.com.desafioana.databinding.ActivityPullBinding
+import bt.com.desafioana.utils.Constants
 import kotlinx.android.synthetic.main.activity_pull.*
 import bt.com.desafioana.viewmodel.PullViewModel as PullViewModel1
 
@@ -27,8 +28,8 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
         bindingPull = ActivityPullBinding.inflate(layoutInflater)
         bindingPull.toolBarPull
         setContentView(bindingPull.root)
-        owner= intent.getStringExtra(RepositoriosActivity.Constants.owner).toString()
-        repositorio = intent.getStringExtra(RepositoriosActivity.Constants.repositorio).toString()
+        owner= intent.getStringExtra(Constants.owner).toString()
+        repositorio = intent.getStringExtra(Constants.repositorio).toString()
 
         bindingPull.pullRecycler.adapter = adapterPull
         bindingPull.pullRecycler.layoutManager = LinearLayoutManager(this)

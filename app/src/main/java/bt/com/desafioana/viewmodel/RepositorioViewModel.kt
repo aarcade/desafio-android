@@ -14,13 +14,16 @@ class RepositorioViewModel: ViewModel() {
     private val clientRepositorio by lazy { InicializadorRetrofit.initRepositorio() }
     val liveDataRepositorioSucesso: MutableLiveData<List<Repositorio>> = MutableLiveData()
     fun getRepositorio(pagina: Int){
+
         clientRepositorio.reposList(pagina).enqueue(object : Callback<Repos> {
             override fun onResponse(call: Call<Repos>, response: Response<Repos>) {
                 if (response.isSuccessful){
                     response.body()?.let {
 
                         liveDataRepositorioSucesso.postValue(it.items)
+
                     }
+
                 }
             }
             override fun onFailure(call: Call<Repos>, t: Throwable) {
