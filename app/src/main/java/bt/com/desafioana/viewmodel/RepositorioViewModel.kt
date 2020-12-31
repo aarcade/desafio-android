@@ -13,6 +13,7 @@ import retrofit2.Response
 class RepositorioViewModel: ViewModel() {
     private val clientRepositorio by lazy { InicializadorRetrofit.initRepositorio() }
     val liveDataRepositorioSucesso: MutableLiveData<List<Repositorio>> = MutableLiveData()
+    val liveDataRepositorioErro = MutableLiveData<Any>()
     fun getRepositorio(pagina: Int){
 
         clientRepositorio.reposList(pagina).enqueue(object : Callback<Repos> {
@@ -21,14 +22,15 @@ class RepositorioViewModel: ViewModel() {
                     response.body()?.let {
 
                         liveDataRepositorioSucesso.postValue(it.items)
-
                     }
 
                 }
             }
             override fun onFailure(call: Call<Repos>, t: Throwable) {
                 Log.d("Erro de chamada", t.message.toString())
-                ////Toast.makeText(this@RepositoriosActivity, t.message, Toast.LENGTH_LONG).show()
+                liveDataRepositorioErro.postValue(t)
+
+
             }
         })
     }
