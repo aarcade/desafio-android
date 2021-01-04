@@ -7,16 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import bt.com.desafioana.adapter.RepositorioAdapter
 import bt.com.desafioana.databinding.ActivityRepositorioBinding
+import bt.com.desafioana.utils.Constants
 import bt.com.desafioana.viewmodel.RepositorioViewModel
 
 class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerViewClickListener {
     private val adapterRepositorio = RepositorioAdapter(ArrayList(), this)
-
     private lateinit var binding: ActivityRepositorioBinding
     private lateinit var viewModel: RepositorioViewModel
-    private var pagina = 1
+    var pagina = 0
+    var isLoading = false
+    var lastPosition = 0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,32 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         getRepositorio(pagina)
+        binding.repositoryRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastCompleteItem = layoutManager.findLastVisibleItemPosition()
+
+                if (!isLoading){
+                    if (lastCompleteItem==adapterRepositorio.repos.size-1){
+                        lastPosition = adapterRepositorio.repos.size+1
+                        pagina+=1
+                        getRepositorio(pagina)
+                    }
+                }
+                if(pagina==35){
+                    isLoading=true
+                }
+
+
+            }
+        })
+
+
+
     }
+
+
 
     private fun getRepositorio(pagina: Int) {
         viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
@@ -49,13 +79,10 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
         viewModel.liveDataRepositorioSucesso.observe(this, Observer {
             adapterRepositorio.repos.addAll(it)
             adapterRepositorio.notifyDataSetChanged()
-        })
-        viewModel.getRepositorio(pagina)
-    }
 
-    object Constants {
-        const val owner = "OWNER"
-        const val repositorio = "REPOSITORIO"
+        })
+        viewModel.getRepositorio(++pagina)
+
     }
 
     override fun onRecyclerViewItemClick(position: Int) {
