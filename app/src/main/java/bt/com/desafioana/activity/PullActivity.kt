@@ -37,7 +37,6 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
         setSupportActionBar(toolBarPull)
         owner= intent.getStringExtra(Constants.owner).toString()
         repositorio = intent.getStringExtra(Constants.repositorio).toString()
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         bindingPull.toolBarPull.title = repositorio
         getPull()

@@ -17,7 +17,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     private val adapterRepositorio = RepositorioAdapter(ArrayList(), this)
     private lateinit var binding: ActivityRepositorioBinding
     private lateinit var viewModel: RepositorioViewModel
-    var pagina = 0
+    var pagina = 1
     var isLoading = false
     var lastPosition = 0
 
@@ -25,6 +25,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
         inicializador()
     }
     private fun inicializador() {
@@ -36,10 +37,18 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         getRepositorio(pagina)
+        onScrollListener()
+
+
+
+    }
+
+    private fun onScrollListener() {
         binding.repositoryRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val layoutManager =
+                    recyclerView.layoutManager as LinearLayoutManager
                 val lastCompleteItem = layoutManager.findLastVisibleItemPosition()
 
                 if (!isLoading){
@@ -49,39 +58,37 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                         getRepositorio(pagina)
                     }
                 }
-                if(pagina==35){
-                    isLoading=true
-                }
 
 
             }
         })
-
-
-
     }
 
 
-
-    private fun getRepositorio(pagina: Int) {
-        viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
+    fun getRepositorio(pagina: Int) {
         sucessoRepositorio()
         erroRepositorio()
     }
 
-    private fun erroRepositorio() {
+    fun erroRepositorio() {
         viewModel.liveDataRepositorioErro.observe(this, Observer {
             Toast.makeText(this, "Erro!", Toast.LENGTH_SHORT).show()
         })
     }
 
-    private fun sucessoRepositorio() {
-        viewModel.liveDataRepositorioSucesso.observe(this, Observer {
-            adapterRepositorio.repos.addAll(it)
-            adapterRepositorio.notifyDataSetChanged()
+    fun sucessoRepositorio() {
+        viewModel.liveDataRepositorioSucesso.observe(this, Observer  {
+            for (i in it ){
+                if (i !in adapterRepositorio.repos){
+                    adapterRepositorio.repos.addAll(listOf(i))
+                    adapterRepositorio.notifyDataSetChanged()
+
+                }
+            }
+
 
         })
-        viewModel.getRepositorio(++pagina)
+        viewModel.getRepositorio(pagina)
 
     }
 

@@ -38,7 +38,7 @@ class RepositorioAdapter(val repos: MutableList<Repositorio>,
         val itemRepositoryBinding: ItemRepositorioBinding
     ) : RecyclerView.ViewHolder(itemRepositoryBinding.root) {
         fun binding(repo: Repositorio) {
-            itemRepositoryBinding.nome.text = repo.fullName
+            itemRepositoryBinding.nome.text = repo.name
             itemRepositoryBinding.descricao.text = repo.description
             itemRepositoryBinding.forkQtd.text = repo.forks.toString()
             itemRepositoryBinding.starQtd.text = repo.stars.toString()
@@ -47,6 +47,7 @@ class RepositorioAdapter(val repos: MutableList<Repositorio>,
 
             Glide.with(itemRepositoryBinding.iconeUsuario)
                 .load(repo.owner.icone_usuario)
+                .circleCrop()
                 .into(itemRepositoryBinding.iconeUsuario)
 
 
