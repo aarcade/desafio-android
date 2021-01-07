@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PullViewModel: ViewModel() {
+class PullViewModel : ViewModel() {
     val liveDataPullSucesso: MutableLiveData<List<PullRequest>> = MutableLiveData()
     val liveDataPullErro = MutableLiveData<Any>()
 
@@ -23,10 +23,13 @@ class PullViewModel: ViewModel() {
 
             }
 
-            override fun onResponse(call: Call<List<PullRequest>>, response: Response<List<PullRequest>>) {
-                if (response.isSuccessful){
+            override fun onResponse(
+                call: Call<List<PullRequest>>,
+                response: Response<List<PullRequest>>
+            ) {
+                if (response.isSuccessful) {
                     response.body()?.let {
-                      liveDataPullSucesso.postValue(it)
+                        liveDataPullSucesso.postValue(it)
 
                     }
                 }
@@ -34,7 +37,6 @@ class PullViewModel: ViewModel() {
 
         })
     }
-
 
 
 }

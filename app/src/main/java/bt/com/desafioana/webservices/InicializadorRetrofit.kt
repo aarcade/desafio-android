@@ -6,20 +6,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object InicializadorRetrofit {
-
-
-   fun initRepositorio(): Interfaces.RepositorioService {
-       val interceptor = HttpLoggingInterceptor()
-       interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
-       val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-         return Retrofit.Builder()
-           .baseUrl("https://api.github.com/")
-             .client(client)
-           .addConverterFactory(GsonConverterFactory.create())
-           .build()
-             .create<Interfaces.RepositorioService>(
-                 Interfaces.RepositorioService::class.java)
-   }
+    fun initRepositorio(): Interfaces.RepositorioService {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        return Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create<Interfaces.RepositorioService>(
+                Interfaces.RepositorioService::class.java
+            )
+    }
 
     fun initPull(): Interfaces.PullService {
         return Retrofit.Builder()
@@ -27,7 +26,8 @@ object InicializadorRetrofit {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create<Interfaces.PullService>(
-                Interfaces.PullService::class.java)
+                Interfaces.PullService::class.java
+            )
     }
 
 }

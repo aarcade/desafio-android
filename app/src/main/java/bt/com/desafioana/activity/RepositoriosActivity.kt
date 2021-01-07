@@ -23,12 +23,12 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     var lastPosition = 0
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(RepositorioViewModel::class.java)
         inicializador()
     }
+
     private fun inicializador() {
         binding = ActivityRepositorioBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,26 +37,25 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
         binding.repositoryRecycler.setHasFixedSize(true)
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        getRepositorio(pagina)
+        getRepositorio()
         onScrollListener()
-
 
 
     }
 
     private fun onScrollListener() {
-        binding.repositoryRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.repositoryRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val layoutManager =
                     recyclerView.layoutManager as LinearLayoutManager
                 val lastCompleteItem = layoutManager.findLastVisibleItemPosition()
 
-                if (!isLoading){
-                    if (lastCompleteItem==adapterRepositorio.repos.size-1){
-                        lastPosition = adapterRepositorio.repos.size+1
-                        pagina+=1
-                        getRepositorio(pagina)
+                if (!isLoading) {
+                    if (lastCompleteItem == adapterRepositorio.repos.size - 1) {
+                        lastPosition = adapterRepositorio.repos.size + 1
+                        pagina += 1
+                        getRepositorio()
                         binding.progressBar.visibility = View.VISIBLE
                     }
                 }
@@ -67,21 +66,21 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
     }
 
 
-    fun getRepositorio(pagina: Int) {
+    fun getRepositorio() {
         sucessoRepositorio()
         erroRepositorio()
     }
 
-    fun erroRepositorio() {
+    private fun erroRepositorio() {
         viewModel.liveDataRepositorioErro.observe(this, Observer {
             Toast.makeText(this, "Erro!", Toast.LENGTH_SHORT).show()
         })
     }
 
-    fun sucessoRepositorio() {
-        viewModel.liveDataRepositorioSucesso.observe(this, Observer  {
-            for (i in it ){
-                if (i !in adapterRepositorio.repos){
+    private fun sucessoRepositorio() {
+        viewModel.liveDataRepositorioSucesso.observe(this, Observer {
+            for (i in it) {
+                if (i !in adapterRepositorio.repos) {
                     adapterRepositorio.repos.addAll(listOf(i))
                     adapterRepositorio.notifyDataSetChanged()
                     binding.progressBar.visibility = View.GONE

@@ -2,36 +2,40 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="InvalidId">
 
         <androidx.appcompat.widget.Toolbar
-            app:title="Nome Repositório"
             android:id="@+id/toolBarPull"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            />
+            app:title="Nome Repositório" />
+
         <ScrollView
             android:id="@+id/scroll_pull"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/pull_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/toolBarPull"
                     android:background="@color/gray"
-                    tools:listitem="@layout/item_pull"/>
+                    tools:listitem="@layout/item_pull" />
+
                 <androidx.core.widget.ContentLoadingProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="match_parent"

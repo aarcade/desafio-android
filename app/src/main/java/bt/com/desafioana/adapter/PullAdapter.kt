@@ -8,8 +8,9 @@ import bt.com.desafioana.modelo.PullRequest
 import com.bumptech.glide.Glide
 
 
-class PullAdapter(val listPull: MutableList<PullRequest>,
-                  private val recyclerRepositoryClickListener: RecyclerClickListener
+class PullAdapter(
+    val listPull: MutableList<PullRequest>,
+    private val recyclerRepositoryClickListener: RecyclerClickListener
 ) : RecyclerView.Adapter<PullAdapter.ViewHolder>() {
 
 
@@ -25,13 +26,13 @@ class PullAdapter(val listPull: MutableList<PullRequest>,
 
     }
 
-    inner class ViewHolder(val itemPull:ItemPullBinding) : RecyclerView.ViewHolder(itemPull.root) {
+    inner class ViewHolder(val itemPull: ItemPullBinding) : RecyclerView.ViewHolder(itemPull.root) {
 
         fun bindingPull(pullRequest: PullRequest) {
             itemPull.tituloPull.text = pullRequest.title
             itemPull.descricaoPull.text = pullRequest.body
             itemPull.usernamePull.text = pullRequest.owner.login
-            itemPull.dataPull.text =pullRequest.created_at
+            itemPull.dataPull.text = pullRequest.created_at
             Glide.with(itemPull.iconeUsuarioPull)
                 .load(pullRequest.owner.icone_usuario)
                 .circleCrop()
@@ -41,7 +42,7 @@ class PullAdapter(val listPull: MutableList<PullRequest>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-           PullAdapter.ViewHolder {
+            PullAdapter.ViewHolder {
         return ViewHolder(
             ItemPullBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -52,7 +53,7 @@ class PullAdapter(val listPull: MutableList<PullRequest>,
     }
 
 
-    interface RecyclerClickListener{
+    interface RecyclerClickListener {
         fun onRecyclerClickListener(position: Int)
     }
 

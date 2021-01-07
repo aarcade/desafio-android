@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="24dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardPull"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cardPull">
+    android:layout_margin="4dp"
+    app:cardCornerRadius="24dp">
 
     <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/titulo_pull"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="24sp"
             android:layout_margin="8dp"
+            android:text="Título Repositório"
             android:textColor="@color/purple_700"
-            android:text="Título Repositório"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descricao_pull"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:layout_margin="8dp"
-            android:textSize="16sp"
             android:layout_below="@id/titulo_pull"
-            android:text="Descrição Repositório"/>
+            android:layout_margin="8dp"
+            android:maxLines="2"
+            android:text="Descrição Repositório"
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icone_usuario_pull"
@@ -39,8 +39,8 @@
             android:layout_below="@id/descricao_pull"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/ic_usuario"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:src="@drawable/ic_usuario" />
 
         <TextView
             android:id="@+id/username_pull"
@@ -50,17 +50,18 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_toRightOf="@id/icone_usuario_pull"
+            android:text="Username"
             android:textColor="@color/black"
-            android:textSize="16sp"
-          android:text="Username" />
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/data_pull"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            android:layout_alignParentRight="true"
             android:layout_below="@id/icone_usuario_pull"
-            android:text="xx/xx/xxxx"/>
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:text="xx/xx/xxxx"
+            android:textSize="16sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

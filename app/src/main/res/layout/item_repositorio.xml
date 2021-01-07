@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_repositorio"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    app:cardCornerRadius="24dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:cardCornerRadius="24dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,15 +14,15 @@
         android:padding="16dp">
 
         <TextView
-            android:textColor="@color/purple_700"
             android:id="@+id/nome"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Nome do Repositorio"
+            android:textColor="@color/purple_700"
             android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,9 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:srcCompat="@android:drawable/btn_star_big_on"
             app:layout_constraintStart_toStartOf="@+id/descricao"
-            app:layout_constraintTop_toBottomOf="@id/descricao" />
+            app:layout_constraintTop_toBottomOf="@id/descricao"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
 
         <TextView
             android:id="@+id/starQtd"

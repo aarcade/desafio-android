@@ -10,15 +10,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RepositorioViewModel: ViewModel() {
+class RepositorioViewModel : ViewModel() {
     private val clientRepositorio by lazy { InicializadorRetrofit.initRepositorio() }
     val liveDataRepositorioSucesso: MutableLiveData<List<Repositorio>> = MutableLiveData()
     val liveDataRepositorioErro = MutableLiveData<Any>()
-    fun getRepositorio(pagina: Int){
+    fun getRepositorio(pagina: Int) {
 
         clientRepositorio.reposList(pagina).enqueue(object : Callback<Repos> {
             override fun onResponse(call: Call<Repos>, response: Response<Repos>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     response.body()?.let {
 
                         liveDataRepositorioSucesso.postValue(it.items)
@@ -26,6 +26,7 @@ class RepositorioViewModel: ViewModel() {
 
                 }
             }
+
             override fun onFailure(call: Call<Repos>, t: Throwable) {
                 Log.d("Erro de chamada", t.message.toString())
                 liveDataRepositorioErro.postValue(t)
