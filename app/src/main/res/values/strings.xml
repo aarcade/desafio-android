@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github JavaPop</string>
+    <string name="opened_closed">Opened/Closed</string>
 </resources>

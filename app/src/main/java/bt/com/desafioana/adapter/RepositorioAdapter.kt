@@ -7,8 +7,10 @@ import bt.com.desafioana.databinding.ItemRepositorioBinding
 import bt.com.desafioana.modelo.Repositorio
 import com.bumptech.glide.Glide
 
-class RepositorioAdapter(val repos: MutableList<Repositorio>,
-                         private val listener: RecyclerViewClickListener) : RecyclerView.Adapter<RepositorioAdapter.ViewHolder>() {
+class RepositorioAdapter(
+    val repos: MutableList<Repositorio>,
+    private val listener: RecyclerViewClickListener
+) : RecyclerView.Adapter<RepositorioAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             ViewHolder {
@@ -51,13 +53,12 @@ class RepositorioAdapter(val repos: MutableList<Repositorio>,
                 .into(itemRepositoryBinding.iconeUsuario)
 
 
-
-
         }
 
 
     }
-    interface RecyclerViewClickListener{
+
+    interface RecyclerViewClickListener {
         fun onRecyclerViewItemClick(position: Int)
     }
 }

@@ -2,6 +2,7 @@ package bt.com.desafioana.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -56,6 +57,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                         lastPosition = adapterRepositorio.repos.size+1
                         pagina+=1
                         getRepositorio(pagina)
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                 }
 
@@ -82,6 +84,7 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                 if (i !in adapterRepositorio.repos){
                     adapterRepositorio.repos.addAll(listOf(i))
                     adapterRepositorio.notifyDataSetChanged()
+                    binding.progressBar.visibility = View.GONE
 
                 }
             }
