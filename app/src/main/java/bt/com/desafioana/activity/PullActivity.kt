@@ -20,6 +20,7 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
     private var repositorio = ""
     private lateinit var bindingPull: ActivityPullBinding
     private lateinit var viewModelPull: PullViewModel1
+    private var count = 0
 
     private val adapterPull = PullAdapter(ArrayList(), this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,5 +73,6 @@ class PullActivity : AppCompatActivity(), PullAdapter.RecyclerClickListener{
         val url = adapterPull.listPull[position].html_url
         val intencaoPull= Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intencaoPull)
+        count+=1
     }
 }

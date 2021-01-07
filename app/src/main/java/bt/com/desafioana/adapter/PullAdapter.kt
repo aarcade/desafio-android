@@ -25,7 +25,8 @@ class PullAdapter(val listPull: MutableList<PullRequest>,
 
     }
 
-    inner class ViewHolder(val itemPull: ItemPullBinding) : RecyclerView.ViewHolder(itemPull.root) {
+    inner class ViewHolder(val itemPull:ItemPullBinding) : RecyclerView.ViewHolder(itemPull.root) {
+
         fun bindingPull(pullRequest: PullRequest) {
             itemPull.tituloPull.text = pullRequest.title
             itemPull.descricaoPull.text = pullRequest.body
