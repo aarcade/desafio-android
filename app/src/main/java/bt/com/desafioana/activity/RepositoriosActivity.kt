@@ -83,9 +83,9 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                 if (i !in adapterRepositorio.repos) {
                     adapterRepositorio.repos.addAll(listOf(i))
                     adapterRepositorio.notifyDataSetChanged()
-                    binding.progressBar.visibility = View.GONE
 
                 }
+                binding.progressBar.visibility = View.GONE
             }
 
 
