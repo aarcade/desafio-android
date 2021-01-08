@@ -14,7 +14,7 @@ class PullViewModel : ViewModel() {
     val liveDataPullErro = MutableLiveData<Any>()
 
     fun getPullRequests(owner: String, repositorio: String) {
-        val clientPull by lazy { InicializadorRetrofit.initPull() }
+        val clientPull by lazy { InicializadorRetrofit.init() }
         val call = clientPull.getPullRequests(owner, repositorio)
         call.enqueue(object : Callback<List<PullRequest>> {
             override fun onFailure(call: Call<List<PullRequest>>, t: Throwable) {

@@ -88,7 +88,6 @@ class RepositoriosActivity : AppCompatActivity(), RepositorioAdapter.RecyclerVie
                 binding.progressBar.visibility = View.GONE
             }
 
-
         })
         viewModel.getRepositorio(pagina)
 

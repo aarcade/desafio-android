@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RepositorioViewModel : ViewModel() {
-    private val clientRepositorio by lazy { InicializadorRetrofit.initRepositorio() }
+    private val clientRepositorio by lazy { InicializadorRetrofit.init() }
     val liveDataRepositorioSucesso: MutableLiveData<List<Repositorio>> = MutableLiveData()
     val liveDataRepositorioErro = MutableLiveData<Any>()
     fun getRepositorio(pagina: Int) {

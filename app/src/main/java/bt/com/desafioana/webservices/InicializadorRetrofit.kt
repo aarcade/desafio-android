@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object InicializadorRetrofit {
-    fun initRepositorio(): Interfaces.RepositorioService {
+    fun init(): GitHubInterfaces {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
@@ -15,19 +15,7 @@ object InicializadorRetrofit {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create<Interfaces.RepositorioService>(
-                Interfaces.RepositorioService::class.java
-            )
-    }
-
-    fun initPull(): Interfaces.PullService {
-        return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create<Interfaces.PullService>(
-                Interfaces.PullService::class.java
-            )
+            .create(GitHubInterfaces::class.java)
     }
 
 }

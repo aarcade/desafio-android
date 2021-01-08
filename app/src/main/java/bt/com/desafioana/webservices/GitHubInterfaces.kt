@@ -7,13 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class Interfaces {
-    interface RepositorioService {
+interface GitHubInterfaces {
         @GET("search/repositories?q=language:Java&sort=stars")
         fun reposList(@Query("page") page: Int): Call<Repos>
-    }
 
-    interface PullService {
 
         @GET("repos/{owner}/{repositorio}/pulls")
         fun getPullRequests(
@@ -21,5 +18,4 @@ class Interfaces {
             @Path("repositorio") repositorio: String
         ): Call<List<PullRequest>>
     }
-}
 
